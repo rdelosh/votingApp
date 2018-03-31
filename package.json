@@ -1,0 +1,22 @@
+{
+  "name": "votingapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdelosh/votingApp.git"
+  },
+  "author": "Victor De Los Santos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rdelosh/votingApp/issues"
+  },
+  "homepage": "https://github.com/rdelosh/votingApp#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
