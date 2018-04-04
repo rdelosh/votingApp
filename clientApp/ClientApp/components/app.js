@@ -1,5 +1,6 @@
 import React from 'react';
-import {BrowserRouter,Route} from 'react-router-dom'
+import {BrowserRouter,Route,Switch} from 'react-router-dom'
+import SignInForm from './auth/signinform'
 
 const Hello = () =>{
 		{return <div>hello</div>}
@@ -17,11 +18,13 @@ class VotingApp extends React.Component{
 	render(){
 		return(
 				<BrowserRouter>
-					<div>
+					<Switch>
 						world
+						{this.props.children}
 						<Route path="/Hello" component={Hello}/>
 						<Route path="/Goodbye" component={Goodbye}/>
-					</div>
+						<Route path="/signin" component={SignInForm}/>
+					</Switch>
 				</BrowserRouter>
 			)
 	}
