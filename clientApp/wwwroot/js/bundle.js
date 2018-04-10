@@ -19876,6 +19876,10 @@
 
 	var _signup2 = _interopRequireDefault(_signup);
 
+	var _landingpage = __webpack_require__(523);
+
+	var _landingpage2 = _interopRequireDefault(_landingpage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19944,7 +19948,8 @@
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/Goodbye', component: Goodbye }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/signin', component: _signinform2.default }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/signout', component: _signout2.default }),
-							_react2.default.createElement(_reactRouterDom.Route, { path: '/signup', component: _signup2.default })
+							_react2.default.createElement(_reactRouterDom.Route, { path: '/signup', component: _signup2.default }),
+							_react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _landingpage2.default })
 						)
 					)
 				);
@@ -39459,6 +39464,7 @@
 	exports.signupUser = signupUser;
 	exports.authError = authError;
 	exports.signoutUser = signoutUser;
+	exports.updatePolls = updatePolls;
 
 	var _axios = __webpack_require__(490);
 
@@ -39513,6 +39519,15 @@
 		localStorage.removeItem('token');
 
 		return { type: _types.UNAUTH_USER };
+	}
+	function updatePolls() {
+		return function (dispatch) {
+			_axios2.default.get('/api/GetPolls').then(function (response) {
+				dispatch({ type: _types.UPDATE_POLLS, payload: response });
+			}).catch(function (error) {
+				dispatch({ type: _types.POLL_UPDATE_ERROR });
+			});
+		};
 	}
 
 /***/ }),
@@ -41001,6 +41016,8 @@
 	var AUTH_USER = exports.AUTH_USER = 'auth_user';
 	var UNAUTH_USER = exports.UNAUTH_USER = 'unauth_user';
 	var AUTH_ERROR = exports.AUTH_ERROR = 'auth_error';
+	var UPDATE_POLLS = exports.UPDATE_POLLS = 'update_polls';
+	var POLL_UPDATE_ERROR = exports.POLL_UPDATE_ERROR = 'poll_update_error';
 
 /***/ }),
 /* 517 */
@@ -41080,14 +41097,18 @@
 					'nav',
 					{ className: 'navbar navbar-light' },
 					_react2.default.createElement(
-						_reactRouterDom.Link,
-						{ to: '/', className: 'navbar-brand' },
-						'Voting App'
-					),
-					_react2.default.createElement(
-						'ul',
-						{ className: 'nav navbar-nav' },
-						this.renderList()
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement(
+							_reactRouterDom.Link,
+							{ to: '/', className: 'navbar-brand' },
+							'Voting App'
+						),
+						_react2.default.createElement(
+							'ul',
+							{ className: 'nav navbar-nav pull-right' },
+							this.renderList()
+						)
 					)
 				);
 			}
@@ -41358,11 +41379,16 @@
 
 	var _auth_reducer2 = _interopRequireDefault(_auth_reducer);
 
+	var _reducer_polls = __webpack_require__(524);
+
+	var _reducer_polls2 = _interopRequireDefault(_reducer_polls);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var rootReducer = (0, _redux.combineReducers)({
 		form: _reduxForm.reducer,
-		auth: _auth_reducer2.default
+		auth: _auth_reducer2.default,
+		polls: _reducer_polls2.default
 	});
 
 	exports.default = rootReducer;
@@ -41395,6 +41421,160 @@
 	};
 
 	var _types = __webpack_require__(516);
+
+/***/ }),
+/* 523 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(223);
+
+	var _actions = __webpack_require__(489);
+
+	var actions = _interopRequireWildcard(_actions);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LandingPage = function (_Component) {
+	    _inherits(LandingPage, _Component);
+
+	    function LandingPage() {
+	        _classCallCheck(this, LandingPage);
+
+	        return _possibleConstructorReturn(this, (LandingPage.__proto__ || Object.getPrototypeOf(LandingPage)).apply(this, arguments));
+	    }
+
+	    _createClass(LandingPage, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.updatePolls();
+	        }
+	    }, {
+	        key: 'componentWillUpdate',
+	        value: function componentWillUpdate() {
+	            this.props.updatePolls();
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-success' },
+	                    'Create Poll'
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-primary' },
+	                    'My Polls'
+	                ),
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-info' },
+	                    'View Recent polls'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { className: 'list-group' },
+	                    this.props.polls.map(function (poll) {
+	                        return _react2.default.createElement(
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            poll.name
+	                        );
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return LandingPage;
+	}(_react.Component);
+
+	function mapStateToProps(state) {
+	    return {
+	        polls: state.polls
+	    };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, actions)(LandingPage);
+
+/***/ }),
+/* 524 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case _types.UPDATE_POLLS:
+	            return action.payload.data;
+	        case _types.POLL_UPDATE_ERROR:
+	            return state;
+	    }
+	    return state;
+	};
+
+	var _sharedfunctions = __webpack_require__(525);
+
+	var _types = __webpack_require__(516);
+
+	var initialpolls = (0, _sharedfunctions.getPolls)();
+
+/***/ }),
+/* 525 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getPolls = undefined;
+
+	var _axios = __webpack_require__(490);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function getPolls() {
+	    _axios2.default.get("/api/GetPolls").then(function (polls) {
+	        return polls;
+	    }).catch(function (err) {
+	        return {};
+	    });
+	}
+
+	exports.getPolls = getPolls;
 
 /***/ })
 /******/ ]);

@@ -4,6 +4,8 @@ import {BrowserRouter} from 'react-router-dom'
 import {AUTH_USER} from './types'
 import {AUTH_ERROR} from './types'
 import {UNAUTH_USER} from './types'
+import {UPDATE_POLLS} from './types'
+import {POLL_UPDATE_ERROR} from './types'
 
 export function signinUser({email,password,history}){
 	return function(dispatch){
@@ -47,4 +49,15 @@ export function signoutUser(){
 	localStorage.removeItem('token');
 
 	return {type:UNAUTH_USER}
+}
+export function updatePolls(){
+	return function(dispatch){
+		axios.get('/api/GetPolls')
+		.then(response=>{
+			dispatch({type:UPDATE_POLLS,payload:response})
+		})
+		.catch(error=>{
+			dispatch({type:POLL_UPDATE_ERROR})
+		})
+	}
 }

@@ -4,6 +4,8 @@ import SignInForm from './auth/signinform'
 import Header from './header'
 import Signout from './auth/signout'
 import Signup from './auth/signup'
+import LandingPage from './landingpage'
+
 const Hello = () =>{
 		{return <div>hello</div>}
 	}
@@ -25,11 +27,13 @@ class VotingApp extends React.Component{
 						<Switch>
 							
 							{this.props.children}
+							
 							<Route path="/Hello" component={Hello}/>
 							<Route path="/Goodbye" component={Goodbye}/>
 							<Route path="/signin" component={SignInForm}/>
 							<Route path="/signout" component={Signout}/>
 							<Route path="/signup" component={Signup}/>
+							<Route path="/" component={LandingPage}/>
 						</Switch>
 					</div>
 				</BrowserRouter>

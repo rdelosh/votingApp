@@ -6,6 +6,12 @@ const config = require('../config')
 const Poll = PollObject.model
 const Option = OptionObject.model
 
+exports.GetPolls = function(req,res,next){
+    Poll.find({}).sort({date: 'desc'}).exec(function(err, foundpolls) { 
+        res.send(foundpolls)
+     });
+
+}
 // /api/CreatePoll takes 2 parameters in jsonformat like this:
 // {
 // 	"question":"who is going to win elections?",
