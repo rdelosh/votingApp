@@ -19880,6 +19880,10 @@
 
 	var _landingpage2 = _interopRequireDefault(_landingpage);
 
+	var _viewpoll = __webpack_require__(526);
+
+	var _viewpoll2 = _interopRequireDefault(_viewpoll);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19944,6 +19948,7 @@
 							_reactRouterDom.Switch,
 							null,
 							this.props.children,
+							_react2.default.createElement(_reactRouterDom.Route, { path: '/viewpoll/:pollid', component: _viewpoll2.default }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/Hello', component: Hello }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/Goodbye', component: Goodbye }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/signin', component: _signinform2.default }),
@@ -24770,7 +24775,7 @@
 		return _react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement('input', _extends({}, field.input, { type: field.type })),
+			_react2.default.createElement('input', _extends({}, field.input, { type: field.type, className: field.className })),
 			field.meta.touched && field.meta.error && _react2.default.createElement(
 				'span',
 				{ className: 'error' },
@@ -24816,25 +24821,29 @@
 
 
 				return _react2.default.createElement(
-					'form',
-					{ onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+					'div',
+					{ className: 'container' },
 					_react2.default.createElement(
-						'label',
-						{ htmlFor: 'email' },
-						'Email'
-					),
-					_react2.default.createElement(_reduxForm.Field, { name: 'email', component: renderInput, type: 'text' }),
-					_react2.default.createElement(
-						'label',
-						{ htmlFor: 'password' },
-						'Password'
-					),
-					_react2.default.createElement(_reduxForm.Field, { name: 'password', component: renderInput, type: 'text' }),
-					this.renderAlert(),
-					_react2.default.createElement(
-						'button',
-						{ action: 'submit', className: 'btn btn-primary' },
-						'Sign in'
+						'form',
+						{ onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+						_react2.default.createElement(
+							'label',
+							{ htmlFor: 'email' },
+							'Email'
+						),
+						_react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'email', component: renderInput, type: 'text' }),
+						_react2.default.createElement(
+							'label',
+							{ htmlFor: 'password' },
+							'Password'
+						),
+						_react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'password', component: renderInput, type: 'text' }),
+						this.renderAlert(),
+						_react2.default.createElement(
+							'button',
+							{ action: 'submit', className: 'btn btn-primary' },
+							'Sign in'
+						)
 					)
 				);
 			}
@@ -41273,31 +41282,35 @@
 	            var handleSubmit = this.props.handleSubmit;
 
 	            return _react2.default.createElement(
-	                'form',
-	                { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	                'div',
+	                { className: 'container' },
 	                _react2.default.createElement(
-	                    'label',
-	                    { htmlFor: 'email' },
-	                    'Email'
-	                ),
-	                _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'email', component: renderInput, type: 'text' }),
-	                _react2.default.createElement(
-	                    'label',
-	                    { htmlFor: 'password' },
-	                    'Password'
-	                ),
-	                _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'password', component: renderInput, type: 'password' }),
-	                _react2.default.createElement(
-	                    'label',
-	                    { htmlFor: 'confirmationpassword' },
-	                    'Confirm password'
-	                ),
-	                _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'confirmationpassword', component: renderInput, type: 'password' }),
-	                this.renderAlert(),
-	                _react2.default.createElement(
-	                    'button',
-	                    { action: 'submit', className: 'btn btn-primary' },
-	                    'Sign up'
+	                    'form',
+	                    { onSubmit: handleSubmit(this.handleFormSubmit.bind(this)) },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'email' },
+	                        'Email'
+	                    ),
+	                    _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'email', component: renderInput, type: 'text' }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'password' },
+	                        'Password'
+	                    ),
+	                    _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'password', component: renderInput, type: 'password' }),
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'confirmationpassword' },
+	                        'Confirm password'
+	                    ),
+	                    _react2.default.createElement(_reduxForm.Field, { className: 'form-control', name: 'confirmationpassword', component: renderInput, type: 'password' }),
+	                    this.renderAlert(),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { action: 'submit', className: 'btn btn-primary' },
+	                        'Sign up'
+	                    )
 	                )
 	            );
 	        }
@@ -41444,6 +41457,8 @@
 
 	var actions = _interopRequireWildcard(_actions);
 
+	var _reactRouterDom = __webpack_require__(161);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41466,11 +41481,6 @@
 	    _createClass(LandingPage, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            this.props.updatePolls();
-	        }
-	    }, {
-	        key: 'componentWillUpdate',
-	        value: function componentWillUpdate() {
 	            this.props.updatePolls();
 	        }
 	    }, {
@@ -41501,7 +41511,11 @@
 	                        return _react2.default.createElement(
 	                            'li',
 	                            { className: 'list-group-item' },
-	                            poll.name
+	                            _react2.default.createElement(
+	                                _reactRouterDom.Link,
+	                                { to: '/viewpoll/' + poll._id },
+	                                poll.name
+	                            )
 	                        );
 	                    })
 	                )
@@ -41575,6 +41589,65 @@
 	}
 
 	exports.getPolls = getPolls;
+
+/***/ }),
+/* 526 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ViewPoll = function (_Component) {
+	    _inherits(ViewPoll, _Component);
+
+	    function ViewPoll() {
+	        _classCallCheck(this, ViewPoll);
+
+	        return _possibleConstructorReturn(this, (ViewPoll.__proto__ || Object.getPrototypeOf(ViewPoll)).apply(this, arguments));
+	    }
+
+	    _createClass(ViewPoll, [{
+	        key: 'getpollid',
+	        value: function getpollid() {
+	            // const {match:{params}} = this.props
+	            var pollid = this.props.match.params.pollid;
+
+
+	            console.log(pollid);
+	            return pollid;
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                this.getpollid()
+	            );
+	        }
+	    }]);
+
+	    return ViewPoll;
+	}(_react.Component);
+
+	exports.default = ViewPoll;
 
 /***/ })
 /******/ ]);

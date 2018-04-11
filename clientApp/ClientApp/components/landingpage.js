@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from'react-redux'
 import * as actions from '../actions'
+import {Link} from 'react-router-dom'
 class LandingPage extends Component{
 
     
     componentWillMount(){
         this.props.updatePolls()
     }
-    componentWillUpdate(){
-        this.props.updatePolls()
-    }
+    
     render(){
         return(
         <div className="container">
@@ -20,7 +19,12 @@ class LandingPage extends Component{
             <ul className="list-group">
                 {
                     this.props.polls.map((poll)=>{
-                        return <li className="list-group-item">{poll.name}</li>
+                        return (
+                            <li className="list-group-item">
+                            
+                                <Link to={`/viewpoll/${poll._id}`}>{poll.name}</Link>
+                            </li>
+                            )
                     }) 
                 }
                 

@@ -5,7 +5,7 @@ import * as actions from '../../actions'
 
 const renderInput = (field) =>
 								  <div>
-								    <input {...field.input} type={field.type} />
+								    <input {...field.input} type={field.type} className={field.className}/>
 								    {field.meta.touched &&
 								      field.meta.error &&
 								      <span className="error">
@@ -40,17 +40,21 @@ class SignInForm extends Component{
 
 
 		    return (
-		      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+					<div className="container">
+						<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 		        <label htmlFor="email">Email</label>
-		        <Field name="email" component={renderInput} type="text" />
+		        <Field className="form-control" name="email" component={renderInput} type="text" />
 		 		
 		        <label htmlFor="password">Password</label>
-		        <Field name="password" component={renderInput} type="text" />
-		 		{this.renderAlert()}
+		        <Field className="form-control" name="password" component={renderInput} type="text" />
+					 		{this.renderAlert()}
 		        <button action="submit" className="btn btn-primary">
 		          Sign in
 		        </button>
 		      </form>
+
+					</div>
+		      
 		    );
 	}
 
