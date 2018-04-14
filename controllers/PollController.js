@@ -117,8 +117,9 @@ function performVoting(optionid,pollid,res){
 exports.GetPoll = function(req,res,next){
     
     if(!req.body.id){return res.send("error: invalid poll id")}
-    console.log(req.body.id)
+    console.log("req.body.id:" + req.body.id)
     Poll.findById(req.body.id,function(err,foundpoll){
+        console.log(foundpoll)
         res.send(foundpoll)
     })  
 }
