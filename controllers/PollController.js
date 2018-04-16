@@ -86,27 +86,52 @@ function performVoting(optionid,pollid,res){
     var identifier = args[3]
     console.log("trolismo")
     console.log(args[3])
+    
 
+            
     Option.findById(optionid,function(err,foundoption){
         
         if(err){return res.send("Could not find option with that ID")}
         if(identifier.type==='userid'){
-            
+            /*
             Poll.findById(pollid,function(err,foundpoll)
             {   
                 
                 if(err){return res.send('could not find poll with that id')}
+                
                 foundpoll.users.push(identifier.userid+"")
                 foundpoll.save(function(err){
                     if(err){return res.send('error while updating poll users')}
                 })
             })
+            */
+            
         }else if(identifier.type==='ip'){
             console.log('ip works')
-        }else{
+        }else{ 
             return res.send('cannot verify ip or userid in order to vote')
         }
+        
         foundoption.votes=foundoption.votes+1
+        
+        Poll.findOneAndUpdate(
+            { "_id": pollid, "options._id": optionid},
+            { 
+                "$set": {
+                    "options.$.votes": foundoption.votes
+                }
+            },
+            function(err,doc) {
+                if(err){
+                    return res.send(err)
+                }
+                
+            }
+        );
+
+        
+        
+        
         foundoption.save(function(err){
             if(err){return res.send("error during updating db")}
             return res.send("voted succesfully")

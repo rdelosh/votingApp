@@ -41475,6 +41475,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var fixedpollid = 0;
+
 	var ViewPoll = function (_Component) {
 	    _inherits(ViewPoll, _Component);
 
@@ -41486,6 +41488,7 @@
 	        _this.state = {
 	            polldata: null
 	        };
+
 	        return _this;
 	    }
 
@@ -41495,8 +41498,8 @@
 	            // const {match:{params}} = this.props
 	            var pollid = this.props.match.params.pollid;
 
+	            fixedpollid = pollid;
 	            // console.log(pollid)
-
 	            return pollid;
 	        }
 	    }, {
@@ -41513,8 +41516,23 @@
 	            });
 	        }
 	    }, {
+	        key: 'vote',
+	        value: function vote(option) {
+	            var confirm = window.confirm('Are you sure you want to vote for ' + option.name + '?');
+	            if (confirm) {
+	                _axios2.default.post("/api/Vote", {
+	                    optionid: option._id,
+	                    pollid: fixedpollid
+	                }).then(function (res) {
+	                    console.log(res.data);
+	                });
+	            }
+	        }
+	    }, {
 	        key: 'polldatareceived',
 	        value: function polldatareceived() {
+	            var _this3 = this;
+
 	            if (this.state.polldata) {
 	                var optionsnames = [];
 	                var votes = [];
@@ -41556,13 +41574,15 @@
 	                        _react2.default.createElement(
 	                            'ul',
 	                            { className: 'list-group' },
-	                            this.state.polldata.options.map(function (option, index) {
+	                            this.state.polldata.options.map(function (option) {
 	                                return _react2.default.createElement(
 	                                    'li',
 	                                    { className: 'list-group-item' },
 	                                    _react2.default.createElement(
 	                                        'button',
-	                                        { className: 'btn btn-primary btn-lg btn-block' },
+	                                        { onClick: function onClick() {
+	                                                _this3.vote(option);
+	                                            }, className: 'btn btn-primary btn-lg btn-block' },
 	                                        option.name
 	                                    )
 	                                );
@@ -53478,7 +53498,7 @@
 /* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 

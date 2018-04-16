@@ -3,18 +3,19 @@ import {Pie} from 'react-chartjs-2'
 import axios from 'axios'
 
 
-
+let fixedpollid=0;
 class ViewPoll extends Component{
     constructor(props){
         super(props)
         this.state={
             polldata:null
         }
+    
     }
     getpollid(){
         // const {match:{params}} = this.props
         const {pollid} = this.props.match.params
-
+        fixedpollid=pollid
         // console.log(pollid)
         return pollid
     }
@@ -28,7 +29,17 @@ class ViewPoll extends Component{
             this.setState({ polldata:res.data });
         })
     }
-
+    vote(option){
+        var confirm =window.confirm(`Are you sure you want to vote for ${option.name}?`)
+        if(confirm){
+            axios.post("/api/Vote",{
+                optionid:option._id,
+                pollid:fixedpollid
+            }).then(res=>{
+                console.log(res.data)
+            })
+        }
+    }
     polldatareceived(){
         if(this.state.polldata){
             let optionsnames = []
@@ -60,9 +71,13 @@ class ViewPoll extends Component{
                         <h3>{this.state.polldata.name}</h3>
                         </div>
                         <ul className="list-group">
-                            {this.state.polldata.options.map(function(option,index){
+                            {this.state.polldata.options.map((option)=>{
                                 return (<li className="list-group-item">
-                                <button className="btn btn-primary btn-lg btn-block">{option.name}</button>
+                                <button onClick={()=>{
+                                    this.vote(option)
+                                }
+
+                                }className="btn btn-primary btn-lg btn-block">{option.name}</button>
                                 
                                     
                                 </li>)

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const option = require('./option')
+// const option = optionObject.model
 
 const pollSchema = new Schema({
     name:String,
