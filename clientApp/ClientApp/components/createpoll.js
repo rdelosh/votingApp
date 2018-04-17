@@ -15,7 +15,7 @@ class CreatePoll extends Component{
     handleSubmit(event){
         console.log(this.state)
         event.preventDefault()
-        //console.log(localStorage.getItem('token'))
+        
         var data ={
             "question":this.state.topic,
             "options":this.state.options

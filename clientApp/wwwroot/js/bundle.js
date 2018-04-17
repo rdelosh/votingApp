@@ -77457,7 +77457,7 @@
 				return { authenticated: false, error: '' };
 			case _types.AUTH_ERROR:
 				console.log(action.payload);
-				return { authenticated: true, error: action.payload };
+				return { authenticated: false, error: action.payload };
 		}
 
 		return state;
@@ -77569,7 +77569,7 @@
 	        value: function handleSubmit(event) {
 	            console.log(this.state);
 	            event.preventDefault();
-	            //console.log(localStorage.getItem('token'))
+
 	            var data = {
 	                "question": this.state.topic,
 	                "options": this.state.options

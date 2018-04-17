@@ -144,10 +144,81 @@ exports.GetPoll = function(req,res,next){
     if(!req.body.id){return res.send("error: invalid poll id")}
     console.log("req.body.id:" + req.body.id)
     Poll.findById(req.body.id,function(err,foundpoll){
-        console.log(foundpoll)
+        if(err){return res.send("error: cannot find poll")}
+        
         res.send(foundpoll)
     })  
 }
+// /api/GetMyPolls   does not take any parameters, only needs jwt in headers
+exports.GetMyPolls =  function(req,res,next){
+
+    
+    Poll.find({owner:decoded_id(req.headers.authorization)},function(err,foundpolls){
+        if(err){return res.send("error: cannot find polls")}
+        
+        return res.send(foundpolls)
+    })
+    
+}
+
+// /api/DeletePoll  takes a poll id as parameter and also requires jwt in headers
+exports.DeletePoll = function(req,res,next){
+    
+    if(!req.body.pollid){return res.send("error: Need to provide a poll id")}
+    
+    Poll.findOneAndRemove(
+        { "_id": req.body.pollid,"owner":decoded_id(req.headers.authorization)},
+         function(err) {
+                if(err){
+                    return res.send("error: could not find a poll that belongs to you with that poll id")
+                }
+        }
+    );
+    
+    return res.send("deletedpoll")
+
+}
+// /api/EditPoll takes a poll id and array of new options
+
+// {
+//     "pollid": "5ad59f533700df289cc0a053",
+//     "newoptions": [gauss,newton,euler]
+// }
+exports.EditPoll = function(req,res,next){
+    if(!req.body.pollid){return res.send("error: Need to provide a poll id")}
+    console.log(req.body.pollid)
+    console.log(decoded_id(req.headers.authorization))
+    console.log(req.body.newoptions)
+    
+    var setOfOptions=[]
+    req.body.newoptions.map(function(data){
+
+        var newoption = new Option({
+            name:data,
+            votes:0
+        })
+        newoption.save(function(err){
+            if(err){return next(err)}
+        })
+        setOfOptions.push(newoption)
+    })
+
+    Poll.findOneAndUpdate({ "_id": req.body.pollid,"owner":decoded_id(req.headers.authorization)},    
+    { 
+        "$push": {
+            "options": {"$each":setOfOptions}
+        }
+    },
+    function(err) {
+        if(err){
+            return res.send("error: could not find a poll that belongs to you with that poll id")
+        }else{
+            return res.send("updated succesfully")
+        }
+    })
+    
+}
+
 
 // exports.RemovePoll = function(req,res,next){
 //     if(!req.body.id){return res.send('Error: need to supply a valid poll id')}
