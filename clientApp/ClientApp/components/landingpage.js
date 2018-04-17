@@ -12,7 +12,7 @@ class LandingPage extends Component{
     render(){
         return(
         <div className="container">
-            <button className="btn btn-success">Create Poll</button>
+            <Link to="/createpoll" className="btn btn-success">Create Poll</Link>
             <button className="btn btn-primary">My Polls</button>
             <button className="btn btn-info">View Recent polls</button>
 
