@@ -13,7 +13,7 @@ class LandingPage extends Component{
         return(
         <div className="container">
             <Link to="/createpoll" className="btn btn-success">Create Poll</Link>
-            <button className="btn btn-primary">My Polls</button>
+            <Link to="/mypolls" className="btn btn-primary">My Polls</Link>
             <button className="btn btn-info">View Recent polls</button>
 
             <ul className="list-group">

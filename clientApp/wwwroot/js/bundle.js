@@ -69,11 +69,11 @@
 
 	var _redux = __webpack_require__(229);
 
-	var _reduxThunk = __webpack_require__(838);
+	var _reduxThunk = __webpack_require__(841);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reducers = __webpack_require__(839);
+	var _reducers = __webpack_require__(842);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -19884,13 +19884,17 @@
 
 	var _viewpoll2 = _interopRequireDefault(_viewpoll);
 
-	var _createpoll = __webpack_require__(843);
+	var _createpoll = __webpack_require__(838);
 
 	var _createpoll2 = _interopRequireDefault(_createpoll);
 
-	var _requireAuth = __webpack_require__(844);
+	var _requireAuth = __webpack_require__(839);
 
 	var _requireAuth2 = _interopRequireDefault(_requireAuth);
+
+	var _mypolls = __webpack_require__(840);
+
+	var _mypolls2 = _interopRequireDefault(_mypolls);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19958,6 +19962,7 @@
 							this.props.children,
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/viewpoll/:pollid', component: _viewpoll2.default }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/createpoll', component: (0, _requireAuth2.default)(_createpoll2.default) }),
+							_react2.default.createElement(_reactRouterDom.Route, { path: '/mypolls', component: (0, _requireAuth2.default)(_mypolls2.default) }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/Hello', component: Hello }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/Goodbye', component: Goodbye }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/signin', component: _signinform2.default }),
@@ -41415,8 +41420,8 @@
 	                    'Create Poll'
 	                ),
 	                _react2.default.createElement(
-	                    'button',
-	                    { className: 'btn btn-primary' },
+	                    _reactRouterDom.Link,
+	                    { to: '/mypolls', className: 'btn btn-primary' },
 	                    'My Polls'
 	                ),
 	                _react2.default.createElement(
@@ -53507,7 +53512,7 @@
 /* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -77378,151 +77383,6 @@
 
 /***/ }),
 /* 838 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	function createThunkMiddleware(extraArgument) {
-	  return function (_ref) {
-	    var dispatch = _ref.dispatch,
-	        getState = _ref.getState;
-	    return function (next) {
-	      return function (action) {
-	        if (typeof action === 'function') {
-	          return action(dispatch, getState, extraArgument);
-	        }
-
-	        return next(action);
-	      };
-	    };
-	  };
-	}
-
-	var thunk = createThunkMiddleware();
-	thunk.withExtraArgument = createThunkMiddleware;
-
-	exports['default'] = thunk;
-
-/***/ }),
-/* 839 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	var _redux = __webpack_require__(229);
-
-	var _reduxForm = __webpack_require__(209);
-
-	var _auth_reducer = __webpack_require__(840);
-
-	var _auth_reducer2 = _interopRequireDefault(_auth_reducer);
-
-	var _reducer_polls = __webpack_require__(841);
-
-	var _reducer_polls2 = _interopRequireDefault(_reducer_polls);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var rootReducer = (0, _redux.combineReducers)({
-		form: _reduxForm.reducer,
-		auth: _auth_reducer2.default,
-		polls: _reducer_polls2.default
-	});
-
-	exports.default = rootReducer;
-
-/***/ }),
-/* 840 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-
-	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-		var action = arguments[1];
-
-		switch (action.type) {
-			case _types.AUTH_USER:
-				return { authenticated: true, error: '' };
-			case _types.UNAUTH_USER:
-				return { authenticated: false, error: '' };
-			case _types.AUTH_ERROR:
-				console.log(action.payload);
-				return { authenticated: false, error: action.payload };
-		}
-
-		return state;
-	};
-
-	var _types = __webpack_require__(516);
-
-/***/ }),
-/* 841 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	exports.default = function () {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	    var action = arguments[1];
-
-	    switch (action.type) {
-	        case _types.UPDATE_POLLS:
-	            return action.payload.data;
-	        case _types.POLL_UPDATE_ERROR:
-	            return state;
-	    }
-	    return state;
-	};
-
-	var _sharedfunctions = __webpack_require__(842);
-
-	var _types = __webpack_require__(516);
-
-	var initialpolls = (0, _sharedfunctions.getPolls)();
-
-/***/ }),
-/* 842 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.getPolls = undefined;
-
-	var _axios = __webpack_require__(490);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function getPolls() {
-	    _axios2.default.get("/api/GetPolls").then(function (polls) {
-	        return polls;
-	    }).catch(function (err) {
-	        return {};
-	    });
-	}
-
-	exports.getPolls = getPolls;
-
-/***/ }),
-/* 843 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77686,7 +77546,7 @@
 	exports.default = CreatePoll;
 
 /***/ }),
-/* 844 */
+/* 839 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -77756,6 +77616,244 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/***/ }),
+/* 840 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(490);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _reactRouterDom = __webpack_require__(161);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var MyPolls = function (_Component) {
+	    _inherits(MyPolls, _Component);
+
+	    function MyPolls(props) {
+	        _classCallCheck(this, MyPolls);
+
+	        var _this = _possibleConstructorReturn(this, (MyPolls.__proto__ || Object.getPrototypeOf(MyPolls)).call(this, props));
+
+	        _this.state = {
+	            mypolls: []
+	        };
+	        return _this;
+	    }
+
+	    _createClass(MyPolls, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            var headers = {
+	                'authorization': localStorage.getItem('token') + "",
+	                'Content-Type': 'application/json'
+	            };
+	            _axios2.default.post("/api/GetMyPolls", {}, {
+	                'headers': headers
+	            }).then(function (res) {
+	                console.log(res.data);
+	                _this2.setState({
+	                    mypolls: res.data
+	                });
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'My Polls'
+	                ),
+	                _react2.default.createElement(
+	                    'ul',
+	                    { className: 'list-group' },
+	                    this.state.mypolls.map(function (mypoll) {
+	                        return _react2.default.createElement(
+	                            _reactRouterDom.Link,
+	                            { to: '/viewpoll/' + mypoll._id, className: 'list-group-item' },
+	                            mypoll.name
+	                        );
+	                    })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return MyPolls;
+	}(_react.Component);
+
+	exports.default = MyPolls;
+
+/***/ }),
+/* 841 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	exports.__esModule = true;
+	function createThunkMiddleware(extraArgument) {
+	  return function (_ref) {
+	    var dispatch = _ref.dispatch,
+	        getState = _ref.getState;
+	    return function (next) {
+	      return function (action) {
+	        if (typeof action === 'function') {
+	          return action(dispatch, getState, extraArgument);
+	        }
+
+	        return next(action);
+	      };
+	    };
+	  };
+	}
+
+	var thunk = createThunkMiddleware();
+	thunk.withExtraArgument = createThunkMiddleware;
+
+	exports['default'] = thunk;
+
+/***/ }),
+/* 842 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _redux = __webpack_require__(229);
+
+	var _reduxForm = __webpack_require__(209);
+
+	var _auth_reducer = __webpack_require__(843);
+
+	var _auth_reducer2 = _interopRequireDefault(_auth_reducer);
+
+	var _reducer_polls = __webpack_require__(844);
+
+	var _reducer_polls2 = _interopRequireDefault(_reducer_polls);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var rootReducer = (0, _redux.combineReducers)({
+		form: _reduxForm.reducer,
+		auth: _auth_reducer2.default,
+		polls: _reducer_polls2.default
+	});
+
+	exports.default = rootReducer;
+
+/***/ }),
+/* 843 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+		var action = arguments[1];
+
+		switch (action.type) {
+			case _types.AUTH_USER:
+				return { authenticated: true, error: '' };
+			case _types.UNAUTH_USER:
+				return { authenticated: false, error: '' };
+			case _types.AUTH_ERROR:
+				console.log(action.payload);
+				return { authenticated: false, error: action.payload };
+		}
+
+		return state;
+	};
+
+	var _types = __webpack_require__(516);
+
+/***/ }),
+/* 844 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	exports.default = function () {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	    var action = arguments[1];
+
+	    switch (action.type) {
+	        case _types.UPDATE_POLLS:
+	            return action.payload.data;
+	        case _types.POLL_UPDATE_ERROR:
+	            return state;
+	    }
+	    return state;
+	};
+
+	var _sharedfunctions = __webpack_require__(845);
+
+	var _types = __webpack_require__(516);
+
+	var initialpolls = (0, _sharedfunctions.getPolls)();
+
+/***/ }),
+/* 845 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.getPolls = undefined;
+
+	var _axios = __webpack_require__(490);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function getPolls() {
+	    _axios2.default.get("/api/GetPolls").then(function (polls) {
+	        return polls;
+	    }).catch(function (err) {
+	        return {};
+	    });
+	}
+
+	exports.getPolls = getPolls;
 
 /***/ })
 /******/ ]);
