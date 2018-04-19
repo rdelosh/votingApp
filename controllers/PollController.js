@@ -77,7 +77,7 @@ exports.Vote = function(req,res,next){
     }
 }
 function decoded_id(token){
-    var decoded_jwt = jwt.decode(token,config.secret)
+    var decoded_jwt = jwt.decode(token,process.env.SECRETCODE||config.secret)
     return decoded_jwt.sub
 }
 function performVoting(optionid,pollid,res){

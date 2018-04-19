@@ -5,8 +5,8 @@ var bodyParser = require('body-parser')
 var morgan = require('morgan')
 var mongoose = require('mongoose')
 var router = require('./routes/router')
-
-mongoose.connect('mongodb://localhost:27017/votingApp')
+var config = require('./config')
+mongoose.connect(process.env.MONGOURI||config.mongouri)
 
 
 
@@ -25,4 +25,4 @@ app.get('*',function(req,res){
 })
 
 
-app.listen(3000)
+app.listen(process.env.PORT||3000)
