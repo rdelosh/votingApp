@@ -19896,6 +19896,10 @@
 
 	var _mypolls2 = _interopRequireDefault(_mypolls);
 
+	var _editpoll = __webpack_require__(847);
+
+	var _editpoll2 = _interopRequireDefault(_editpoll);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19960,6 +19964,7 @@
 							_reactRouterDom.Switch,
 							null,
 							this.props.children,
+							_react2.default.createElement(_reactRouterDom.Route, { path: '/editpoll/:pollid', component: (0, _requireAuth2.default)(_editpoll2.default) }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/viewpoll/:pollid', component: _viewpoll2.default }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/createpoll', component: (0, _requireAuth2.default)(_createpoll2.default) }),
 							_react2.default.createElement(_reactRouterDom.Route, { path: '/mypolls', component: (0, _requireAuth2.default)(_mypolls2.default) }),
@@ -77695,9 +77700,24 @@
 	                    { className: 'list-group' },
 	                    this.state.mypolls.map(function (mypoll) {
 	                        return _react2.default.createElement(
-	                            _reactRouterDom.Link,
-	                            { to: '/viewpoll/' + mypoll._id, className: 'list-group-item' },
-	                            mypoll.name
+	                            'li',
+	                            { className: 'list-group-item' },
+	                            mypoll.name,
+	                            _react2.default.createElement(
+	                                _reactRouterDom.Link,
+	                                { to: '/viewpoll/' + mypoll._id, className: 'btn btn-primary pull-right' },
+	                                'View Poll'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactRouterDom.Link,
+	                                { to: '/editpoll/' + mypoll._id, className: 'btn btn-warning pull-right' },
+	                                'Edit Poll'
+	                            ),
+	                            _react2.default.createElement(
+	                                _reactRouterDom.Link,
+	                                { to: '/viewpoll/' + mypoll._id, className: 'btn btn-danger pull-right' },
+	                                'DeletePoll'
+	                            )
 	                        );
 	                    })
 	                )
@@ -77854,6 +77874,217 @@
 	}
 
 	exports.getPolls = getPolls;
+
+/***/ }),
+/* 846 */,
+/* 847 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _axios = __webpack_require__(490);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var EditPoll = function (_Component) {
+	    _inherits(EditPoll, _Component);
+
+	    function EditPoll(props) {
+	        _classCallCheck(this, EditPoll);
+
+	        var _this = _possibleConstructorReturn(this, (EditPoll.__proto__ || Object.getPrototypeOf(EditPoll)).call(this, props));
+
+	        _this.state = {
+	            polldata: null,
+	            newoptions: []
+	        };
+	        return _this;
+	    }
+
+	    _createClass(EditPoll, [{
+	        key: 'getpollid',
+	        value: function getpollid() {
+	            var pollid = this.props.match.params.pollid;
+
+	            return pollid;
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var _this2 = this;
+
+	            _axios2.default.post("/api/GetPoll/", {
+	                id: this.getpollid()
+	            }).then(function (res) {
+	                console.log(res.data);
+	                var persons = res.data;
+	                _this2.setState({ polldata: res.data });
+	            });
+	        }
+	    }, {
+	        key: 'handleSubmit',
+	        value: function handleSubmit(event) {
+	            event.preventDefault();
+	            var data = {
+	                "pollid": this.getpollid(),
+	                "newoptions": this.state.newoptions
+	            };
+	            var headers = {
+	                'authorization': localStorage.getItem('token') + "",
+	                'Content-Type': 'application/json'
+	            };
+	            _axios2.default.post("/api/EditPoll", data, {
+	                'headers': headers
+	            }).then(function (res) {
+	                console.log(res.data);
+	            });
+	        }
+	    }, {
+	        key: 'renderform',
+	        value: function renderform() {
+	            var _this3 = this;
+
+	            if (this.state.polldata) {
+	                return _react2.default.createElement(
+	                    'form',
+	                    { onSubmit: function onSubmit(event) {
+	                            _this3.handleSubmit(event);
+	                        } },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group' },
+	                        _react2.default.createElement(
+	                            'label',
+	                            { htmlFor: 'topic' },
+	                            'Topic'
+	                        ),
+	                        _react2.default.createElement('input', { disabled: true, className: 'form-control', value: this.state.polldata.name,
+	                            type: 'text', id: 'topic', name: 'topic' })
+	                    ),
+	                    this.state.polldata.options.map(function (option, index) {
+	                        return _react2.default.createElement(
+	                            'div',
+	                            { className: 'form-group' },
+	                            _react2.default.createElement(
+	                                'label',
+	                                { htmlFor: 'topic' },
+	                                'Option ',
+	                                index + 1
+	                            ),
+	                            _react2.default.createElement('input', { disabled: true, className: 'form-control', value: option.name,
+	                                type: 'text', id: 'topic', name: 'topic' })
+	                        );
+	                    }),
+	                    this.renderNewOptions(),
+	                    _react2.default.createElement('input', { className: 'btn btn-success form-control', type: 'submit', value: 'Submit Poll Changes' })
+	                );
+	            } else {
+	                return _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    'Loading...'
+	                );
+	            }
+	        }
+	    }, {
+	        key: 'renderNewOptions',
+	        value: function renderNewOptions() {
+	            var _this4 = this;
+
+	            return this.state.newoptions.map(function (option, index) {
+	                var _React$createElement;
+
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'form-group' },
+	                    _react2.default.createElement(
+	                        'label',
+	                        { htmlFor: 'topic' },
+	                        'Option ',
+	                        _this4.state.polldata.options.length + index + 1
+	                    ),
+	                    _react2.default.createElement('input', (_React$createElement = { value: _this4.state.newoptions[index], onChange: function onChange(event) {
+	                            var newarray = Object.assign([], _this4.state.newoptions);
+	                            newarray[index] = event.target.value;
+	                            _this4.setState({ newoptions: newarray });
+	                            console.log(_this4.state.newoptions);
+	                        }, className: 'form-control' }, _defineProperty(_React$createElement, 'value', option), _defineProperty(_React$createElement, 'type', 'text'), _defineProperty(_React$createElement, 'id', 'topic'), _defineProperty(_React$createElement, 'name', 'topic'), _React$createElement)),
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn btn-danger', onClick: function onClick(event) {
+	                                event.preventDefault();
+
+	                                var newarray = Object.assign([], _this4.state.newoptions);
+
+	                                newarray.splice(index, 1);
+
+	                                _this4.setState({ newoptions: newarray });
+	                            } },
+	                        'remove this option'
+	                    )
+	                );
+	            });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var _this5 = this;
+
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Edit Poll'
+	                ),
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'Poll Id:',
+	                    this.getpollid(),
+	                    ' '
+	                ),
+	                this.renderform(),
+	                _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-primary', onClick: function onClick() {
+	                            var newarray = Object.assign(_this5.state.newoptions);
+	                            newarray.push("");
+	                            _this5.setState({
+	                                newoptions: newarray
+	                            });
+	                        } },
+	                    'add options'
+	                )
+	            );
+	        }
+	    }]);
+
+	    return EditPoll;
+	}(_react.Component);
+
+	exports.default = EditPoll;
 
 /***/ })
 /******/ ]);

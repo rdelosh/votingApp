@@ -36,7 +36,15 @@ class MyPolls extends Component{
                 {
                     
                     this.state.mypolls.map((mypoll)=>{
-                        return <Link to={`/viewpoll/${mypoll._id}`} className="list-group-item">{mypoll.name}</Link>
+                        return (
+                            <li className="list-group-item">
+                                {mypoll.name}
+                                <Link to={`/viewpoll/${mypoll._id}`} className="btn btn-primary pull-right">View Poll</Link>   
+                                <Link to={`/editpoll/${mypoll._id}`} className="btn btn-warning pull-right">Edit Poll</Link>   
+                                <Link to={`/viewpoll/${mypoll._id}`} className="btn btn-danger pull-right">DeletePoll</Link>   
+                            </li>
+
+                        )
                     })
                 
                 }

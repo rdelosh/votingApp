@@ -9,6 +9,9 @@ import ViewPoll from './viewpoll'
 import CreatePoll from './createpoll'
 import RequireAuth from './auth/requireAuth'
 import MyPolls from './mypolls'
+import EditPoll from './editpoll'
+
+
 const Hello = () =>{
 		{return <div>hello</div>}
 	}
@@ -30,6 +33,7 @@ class VotingApp extends React.Component{
 						<Switch>
 							
 							{this.props.children}
+							<Route path="/editpoll/:pollid" component={RequireAuth(EditPoll)}/>
 							<Route path="/viewpoll/:pollid" component={ViewPoll}/>
 							<Route path="/createpoll" component={RequireAuth(CreatePoll)}/>
 							<Route path="/mypolls" component={RequireAuth(MyPolls)}/>
