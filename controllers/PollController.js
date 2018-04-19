@@ -42,10 +42,10 @@ exports.CreatePoll = function(req,res,next){
         newpoll.save(function(err){
             if(err){return next(err)}
         })
-        founduser.polls.push(newpoll)
-        founduser.save(function(err){
-			if(err){return next(err)}
-		})
+        // founduser.polls.push(newpoll)
+        // founduser.save(function(err){
+		// 	if(err){return next(err)}
+		// })
     })
 
     res.send("created poll succesfully")

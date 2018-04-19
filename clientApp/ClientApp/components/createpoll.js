@@ -31,10 +31,14 @@ class CreatePoll extends Component{
         )
         .then((res) => {
             console.log(res.data)
+            this.props.history.push("/")
         })
 
         
 
+    }
+    componentDidMount(){
+        console.log(this.props.history)
     }
  
     modifyoption(index,event){

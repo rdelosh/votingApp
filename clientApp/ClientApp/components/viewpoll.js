@@ -19,6 +19,7 @@ class ViewPoll extends Component{
         // console.log(pollid)
         return pollid
     }
+    
     componentDidMount(){
         axios.post("/api/GetPoll/",{
             id:this.getpollid()
@@ -35,12 +36,24 @@ class ViewPoll extends Component{
             axios.post("/api/Vote",{
                 optionid:option._id,
                 pollid:fixedpollid
-            }).then(res=>{
-                console.log(res.data)
+            }).then((res)=>{
+                
+                    axios.post("/api/GetPoll/",{
+                        id:this.getpollid()
+                    })
+                    .then(res => {
+                        console.log(res.data)
+                        const persons = res.data;
+                        this.setState({ polldata:res.data });
+                    })
+                
+                
+                
             })
         }
     }
     polldatareceived(){
+        
         if(this.state.polldata){
             let optionsnames = []
             let votes = []

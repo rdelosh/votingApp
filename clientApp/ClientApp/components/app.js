@@ -10,7 +10,7 @@ import CreatePoll from './createpoll'
 import RequireAuth from './auth/requireAuth'
 import MyPolls from './mypolls'
 import EditPoll from './editpoll'
-
+import PageWrapper from './pagewrapper'
 
 const Hello = () =>{
 		{return <div>hello</div>}
@@ -33,16 +33,16 @@ class VotingApp extends React.Component{
 						<Switch>
 							
 							{this.props.children}
-							<Route path="/editpoll/:pollid" component={RequireAuth(EditPoll)}/>
-							<Route path="/viewpoll/:pollid" component={ViewPoll}/>
-							<Route path="/createpoll" component={RequireAuth(CreatePoll)}/>
-							<Route path="/mypolls" component={RequireAuth(MyPolls)}/>
+							<Route path="/editpoll/:pollid" component={PageWrapper(RequireAuth(EditPoll))}/>
+							<Route path="/viewpoll/:pollid" component={PageWrapper(ViewPoll)}/>
+							<Route path="/createpoll" component={PageWrapper(RequireAuth(CreatePoll))}/>
+							<Route path="/mypolls" component={PageWrapper(RequireAuth(MyPolls))}/>
 							<Route path="/Hello" component={Hello}/>
 							<Route path="/Goodbye" component={Goodbye}/>
-							<Route path="/signin" component={SignInForm}/>
-							<Route path="/signout" component={Signout}/>
-							<Route path="/signup" component={Signup}/>
-							<Route path="/" component={LandingPage}/>
+							<Route path="/signin" component={PageWrapper(SignInForm)}/>
+							<Route path="/signout" component={PageWrapper(Signout)}/>
+							<Route path="/signup" component={PageWrapper(Signup)}/>
+							<Route path="/" component={PageWrapper(LandingPage)}/>
 						</Switch>
 					</div>
 				</BrowserRouter>

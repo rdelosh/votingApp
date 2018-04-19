@@ -9,7 +9,7 @@ export default function(state={},action){
 		case UNAUTH_USER:
 			return {authenticated:false,error:''}
 		case AUTH_ERROR:
-			console.log(action.payload)
+			
 			return {authenticated:false,error:action.payload}
 	}
 

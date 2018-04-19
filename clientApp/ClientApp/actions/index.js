@@ -29,7 +29,7 @@ export function signupUser({email,password,history}){
 		.then(response=>{
 			dispatch({type:AUTH_USER})
 			localStorage.setItem('token',response.data.token)
-			history.push('/Hello')
+			history.push('/')
 		}).catch((response)=>{
 			//console.log(response)
 			dispatch(authError('Could not sign up, email might be in use'))

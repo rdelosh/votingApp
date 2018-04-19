@@ -41,6 +41,7 @@ class SignInForm extends Component{
 
 		    return (
 					<div className="container">
+						<h3>Please sign in to create a poll or view your polls</h3>
 						<form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
 		        <label htmlFor="email">Email</label>
 		        <Field className="form-control" name="email" component={renderInput} type="text" />
