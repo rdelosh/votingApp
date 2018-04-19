@@ -61,9 +61,10 @@ class ViewPoll extends Component{
                             const persons = res.data;
                             this.setState({ polldata:res.data });
                         })
+                })
+                .catch(err=>{
                     
-                    
-                    
+                    alert("Sorry, but "+err.response.data)
                 })
             }else{
                 console.log("voting unauthenticated")
@@ -74,13 +75,13 @@ class ViewPoll extends Component{
                             id:this.getpollid()
                         })
                         .then(res => {
-                            console.log(res.data)
                             const persons = res.data;
                             this.setState({ polldata:res.data });
                         })
+                })
+                .catch(err=>{
                     
-                    
-                    
+                    alert("Sorry, but "+err.response.data)
                 })
             }
 

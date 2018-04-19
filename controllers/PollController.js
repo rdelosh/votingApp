@@ -66,7 +66,7 @@ exports.Vote = function(req,res,next){
         Poll.findOne({_id:pollid,users:userid},function(err,foundpoll){
             if(err){return res.send('could not find a poll with that id')}
             if(foundpoll){
-                return res.send('User already voted')
+                return res.status(404).send('User already voted')
             }else{
                 performVoting(optionid,pollid,res,{type:"userid",userid:userid})
             }
@@ -78,7 +78,7 @@ exports.Vote = function(req,res,next){
         console.log(req.headers["x-forwarded-for"])
         console.log(req.headers)
         Poll.findOne({_id:pollid,ips:ip},function(err,foundpoll){
-            if(err){return res.send('could not find a poll with that id')}
+            if(err){return res.status(404).send('could not find a poll with that id')}
             if(foundpoll){
                 return res.send('this IP address already voted')
             }else{

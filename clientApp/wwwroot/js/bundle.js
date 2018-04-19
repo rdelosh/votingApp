@@ -41695,6 +41695,9 @@
 	                            var persons = res.data;
 	                            _this3.setState({ polldata: res.data });
 	                        });
+	                    }).catch(function (err) {
+
+	                        alert("Sorry, but " + err.response.data);
 	                    });
 	                } else {
 	                    console.log("voting unauthenticated");
@@ -41703,10 +41706,12 @@
 	                        _axios2.default.post("/api/GetPoll/", {
 	                            id: _this3.getpollid()
 	                        }).then(function (res) {
-	                            console.log(res.data);
 	                            var persons = res.data;
 	                            _this3.setState({ polldata: res.data });
 	                        });
+	                    }).catch(function (err) {
+
+	                        alert("Sorry, but " + err.response.data);
 	                    });
 	                }
 	            }
