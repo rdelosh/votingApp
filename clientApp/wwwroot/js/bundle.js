@@ -77685,8 +77685,28 @@
 	            });
 	        }
 	    }, {
+	        key: 'deletePoll',
+	        value: function deletePoll(pollid) {
+	            console.log(pollid);
+
+	            var data = {
+	                "pollid": pollid
+	            };
+	            var headers = {
+	                'authorization': localStorage.getItem('token') + "",
+	                'Content-Type': 'application/json'
+	            };
+	            _axios2.default.post("/api/DeletePoll", data, {
+	                'headers': headers
+	            }).then(function (res) {
+	                console.log(res.data);
+	            });
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var _this3 = this;
+
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'container' },
@@ -77714,8 +77734,10 @@
 	                                'Edit Poll'
 	                            ),
 	                            _react2.default.createElement(
-	                                _reactRouterDom.Link,
-	                                { to: '/viewpoll/' + mypoll._id, className: 'btn btn-danger pull-right' },
+	                                'button',
+	                                { onClick: function onClick() {
+	                                        _this3.deletePoll(mypoll._id);
+	                                    }, className: 'btn btn-danger pull-right' },
 	                                'DeletePoll'
 	                            )
 	                        );
