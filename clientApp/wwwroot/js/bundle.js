@@ -41615,6 +41615,8 @@
 
 	var _axios2 = _interopRequireDefault(_axios);
 
+	var _reactRedux = __webpack_require__(223);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41670,19 +41672,43 @@
 
 	            var confirm = window.confirm('Are you sure you want to vote for ' + option.name + '?');
 	            if (confirm) {
-	                _axios2.default.post("/api/Vote", {
-	                    optionid: option._id,
-	                    pollid: fixedpollid
-	                }).then(function (res) {
 
-	                    _axios2.default.post("/api/GetPoll/", {
-	                        id: _this3.getpollid()
+	                var data = {
+	                    "optionid": option._id,
+	                    "pollid": fixedpollid
+	                };
+	                var headers = {
+	                    'authorization': localStorage.getItem('token') + "",
+	                    'Content-Type': 'application/json'
+	                };
+	                console.log(this.props.authenticated);
+	                if (this.props.authenticated) {
+	                    console.log("voting authenticated");
+	                    _axios2.default.post("/api/Vote", data, {
+	                        'headers': headers
 	                    }).then(function (res) {
-	                        console.log(res.data);
-	                        var persons = res.data;
-	                        _this3.setState({ polldata: res.data });
+
+	                        _axios2.default.post("/api/GetPoll/", {
+	                            id: _this3.getpollid()
+	                        }).then(function (res) {
+	                            console.log(res.data);
+	                            var persons = res.data;
+	                            _this3.setState({ polldata: res.data });
+	                        });
 	                    });
-	                });
+	                } else {
+	                    console.log("voting unauthenticated");
+	                    _axios2.default.post("/api/Vote", data).then(function (res) {
+
+	                        _axios2.default.post("/api/GetPoll/", {
+	                            id: _this3.getpollid()
+	                        }).then(function (res) {
+	                            console.log(res.data);
+	                            var persons = res.data;
+	                            _this3.setState({ polldata: res.data });
+	                        });
+	                    });
+	                }
 	            }
 	        }
 	    }, {
@@ -41779,7 +41805,12 @@
 	    return ViewPoll;
 	}(_react.Component);
 
-	exports.default = ViewPoll;
+	function mapStateToProps(state) {
+	    return {
+	        authenticated: state.auth.authenticated
+	    };
+	}
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(ViewPoll);
 
 /***/ }),
 /* 522 */
@@ -53655,7 +53686,7 @@
 /* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 

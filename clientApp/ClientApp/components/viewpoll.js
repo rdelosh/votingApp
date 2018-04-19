@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Pie} from 'react-chartjs-2'
 import axios from 'axios'
+import {connect} from 'react-redux'
 
 
 let fixedpollid=0;
@@ -33,23 +34,58 @@ class ViewPoll extends Component{
     vote(option){
         var confirm =window.confirm(`Are you sure you want to vote for ${option.name}?`)
         if(confirm){
-            axios.post("/api/Vote",{
-                optionid:option._id,
-                pollid:fixedpollid
-            }).then((res)=>{
-                
-                    axios.post("/api/GetPoll/",{
-                        id:this.getpollid()
-                    })
-                    .then(res => {
-                        console.log(res.data)
-                        const persons = res.data;
-                        this.setState({ polldata:res.data });
-                    })
-                
-                
-                
-            })
+
+
+            var data ={
+                "optionid":option._id,
+                "pollid":fixedpollid
+            }
+            var headers = {
+                'authorization':localStorage.getItem('token')+"",
+                'Content-Type': 'application/json'
+            }
+            console.log(this.props.authenticated)
+            if(this.props.authenticated){
+                console.log("voting authenticated")
+                axios.post("/api/Vote",data,
+                {
+                    'headers':headers
+                }
+                ).then((res)=>{
+                    
+                        axios.post("/api/GetPoll/",{
+                            id:this.getpollid()
+                        })
+                        .then(res => {
+                            console.log(res.data)
+                            const persons = res.data;
+                            this.setState({ polldata:res.data });
+                        })
+                    
+                    
+                    
+                })
+            }else{
+                console.log("voting unauthenticated")
+                axios.post("/api/Vote",data)
+                .then((res)=>{
+                    
+                        axios.post("/api/GetPoll/",{
+                            id:this.getpollid()
+                        })
+                        .then(res => {
+                            console.log(res.data)
+                            const persons = res.data;
+                            this.setState({ polldata:res.data });
+                        })
+                    
+                    
+                    
+                })
+            }
+
+
+
         }
     }
     polldatareceived(){
@@ -121,4 +157,9 @@ class ViewPoll extends Component{
         )
     }
 }
-export default ViewPoll
+function mapStateToProps(state){
+    return {
+        authenticated:state.auth.authenticated
+    }
+}
+export default connect(mapStateToProps)(ViewPoll)
