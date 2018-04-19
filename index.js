@@ -6,7 +6,7 @@ var morgan = require('morgan')
 var mongoose = require('mongoose')
 var router = require('./routes/router')
 var env = process.env.NODE_ENV||'dev'
-if (env!=='production') {
+if (env=='dev') {
     var config = require('./config')
 }
 

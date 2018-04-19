@@ -2,7 +2,9 @@ const User = require('../models/user')
 const PollObject = require('../models/poll')
 const OptionObject = require('../models/option')
 const jwt = require('jwt-simple')
-const config = require('../config')
+if (env=='dev') {
+	var config = require('../config')
+}
 const Poll = PollObject.model
 const Option = OptionObject.model
 

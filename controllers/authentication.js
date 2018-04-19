@@ -1,8 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jwt-simple')
 var env = process.env.NODE_ENV||'dev'
-if (env!=='production') {
-    var config = require('../config')
+if (env=='dev') {
+	var config = require('../config')
 }
 
 function tokenForUser(user){
