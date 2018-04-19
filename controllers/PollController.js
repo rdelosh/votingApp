@@ -2,6 +2,7 @@ const User = require('../models/user')
 const PollObject = require('../models/poll')
 const OptionObject = require('../models/option')
 const jwt = require('jwt-simple')
+var env = process.env.NODE_ENV||'dev'
 if (env=='dev') {
 	var config = require('../config')
 }
