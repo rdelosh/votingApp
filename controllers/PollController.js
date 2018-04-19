@@ -77,8 +77,19 @@ exports.Vote = function(req,res,next){
         var ip = req.headers["x-forwarded-for"]
         console.log(req.headers["x-forwarded-for"])
         console.log(req.headers)
+        Poll.findOne({_id:pollid,ips:ip},function(err,foundpoll){
+            if(err){return res.send('could not find a poll with that id')}
+            if(foundpoll){
+                return res.send('this IP address already voted')
+            }else{
+                performVoting(optionid,pollid,res,{type:"ip",ip:ip})
+            }
+
+        })
+
+
         // IF IP ALREADY EXISTS IN POLL.IPS, THEN RES.SEND("IP ALREADY VOTED")
-        performVoting(optionid,pollid,res,{type:"ip",ip:ip})
+        // performVoting(optionid,pollid,res,{type:"ip",ip:ip})
     }
 }
 function decoded_id(token){
@@ -98,7 +109,7 @@ function performVoting(optionid,pollid,res){
         
         if(err){return res.send("Could not find option with that ID")}
         if(identifier.type==='userid'){
-            /*
+            
             Poll.findById(pollid,function(err,foundpoll)
             {   
                 
@@ -109,10 +120,20 @@ function performVoting(optionid,pollid,res){
                     if(err){return res.send('error while updating poll users')}
                 })
             })
-            */
+            
             
         }else if(identifier.type==='ip'){
             console.log('ip works')
+            Poll.findById(pollid,function(err,foundpoll)
+            {   
+                
+                if(err){return res.send('could not find poll with that id')}
+                
+                foundpoll.ips.push(identifier.ip+"")
+                foundpoll.save(function(err){
+                    if(err){return res.send('error while updating poll users')}
+                })
+            })
 
         }else{ 
             return res.send('cannot verify ip or userid in order to vote')
@@ -140,7 +161,7 @@ function performVoting(optionid,pollid,res){
         
         foundoption.save(function(err){
             if(err){return res.send("error during updating db")}
-            return res.send(identifier.ip)
+            return res.send("Voted succesfully")
         })
     })
 }
