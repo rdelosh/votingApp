@@ -113,6 +113,7 @@ function performVoting(optionid,pollid,res){
             
         }else if(identifier.type==='ip'){
             console.log('ip works')
+
         }else{ 
             return res.send('cannot verify ip or userid in order to vote')
         }
@@ -139,7 +140,7 @@ function performVoting(optionid,pollid,res){
         
         foundoption.save(function(err){
             if(err){return res.send("error during updating db")}
-            return res.send("voted succesfully")
+            return res.send(identifier.ip)
         })
     })
 }
