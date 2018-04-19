@@ -1,7 +1,7 @@
 const passport = require('passport')
 const User = require('../models/user')
-var fs = require('fs');
-if (fs.existsSync('../config')) {
+var env = 'dev'
+if (process.env.NODE_ENV=='production') {
     var config = require('../config')
 }
 const JwtStrategy = require('passport-jwt').Strategy

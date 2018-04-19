@@ -1,7 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jwt-simple')
-var fs = require('fs');
-if (fs.existsSync('../config')) {
+var env = 'dev'
+if (process.env.NODE_ENV=='production') {
     var config = require('../config')
 }
 

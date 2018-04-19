@@ -5,7 +5,11 @@ var bodyParser = require('body-parser')
 var morgan = require('morgan')
 var mongoose = require('mongoose')
 var router = require('./routes/router')
-var config = require('./config')
+var env = 'dev'
+if (process.env.NODE_ENV=='production') {
+    var config = require('./config')
+}
+
 mongoose.connect(process.env.MONGOURI||config.mongouri)
 
 
