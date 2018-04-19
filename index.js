@@ -5,8 +5,8 @@ var bodyParser = require('body-parser')
 var morgan = require('morgan')
 var mongoose = require('mongoose')
 var router = require('./routes/router')
-var env = 'dev'
-if (process.env.NODE_ENV=='production') {
+var env = process.env.NODE_ENV||'dev'
+if (env!=='production') {
     var config = require('./config')
 }
 
