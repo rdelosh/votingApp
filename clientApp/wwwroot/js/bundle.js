@@ -19912,18 +19912,49 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Hello = function Hello() {
-		{
-			return _react2.default.createElement(
-				'div',
-				null,
-				'hello'
-			);
-		}
-	};
+	var Hello = function (_React$Component) {
+		_inherits(Hello, _React$Component);
 
-	var Goodbye = function (_React$Component) {
-		_inherits(Goodbye, _React$Component);
+		function Hello() {
+			_classCallCheck(this, Hello);
+
+			return _possibleConstructorReturn(this, (Hello.__proto__ || Object.getPrototypeOf(Hello)).apply(this, arguments));
+		}
+
+		_createClass(Hello, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var _this2 = this;
+
+				setTimeout(function () {
+					_this2.props.history.push('/');
+				}, 2000);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'div',
+					{ className: 'container' },
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Hello!'
+					),
+					_react2.default.createElement(
+						'h1',
+						null,
+						'Welcome Back!'
+					)
+				);
+			}
+		}]);
+
+		return Hello;
+	}(_react2.default.Component);
+
+	var Goodbye = function (_React$Component2) {
+		_inherits(Goodbye, _React$Component2);
 
 		function Goodbye() {
 			_classCallCheck(this, Goodbye);
@@ -19935,7 +19966,7 @@
 			key: 'render',
 			value: function render() {
 				return _react2.default.createElement(
-					'div',
+					'h1',
 					null,
 					'Goodbye'
 				);
@@ -19945,8 +19976,8 @@
 		return Goodbye;
 	}(_react2.default.Component);
 
-	var VotingApp = function (_React$Component2) {
-		_inherits(VotingApp, _React$Component2);
+	var VotingApp = function (_React$Component3) {
+		_inherits(VotingApp, _React$Component3);
 
 		function VotingApp() {
 			_classCallCheck(this, VotingApp);
@@ -41100,28 +41131,28 @@
 				if (this.props.authenticated) {
 					return _react2.default.createElement(
 						'li',
-						{ className: 'nav-item' },
+						{ className: 'nav-item pull-right' },
 						_react2.default.createElement(
 							_reactRouterDom.Link,
-							{ to: '/signout', className: 'nav-link' },
+							{ to: '/signout', className: 'nav-link pull-right' },
 							'Sign Out'
 						)
 					);
 				} else {
 					return [_react2.default.createElement(
 						'li',
-						{ className: 'nav-item' },
+						{ className: 'nav-item pull-right' },
 						_react2.default.createElement(
 							_reactRouterDom.Link,
-							{ to: '/signin', className: 'nav-link' },
+							{ to: '/signin', className: 'nav-link pull-right' },
 							'Sign in'
 						)
 					), _react2.default.createElement(
 						'li',
-						{ className: 'nav-item' },
+						{ className: 'nav-item pull-right' },
 						_react2.default.createElement(
 							_reactRouterDom.Link,
-							{ to: '/signup', className: 'nav-link' },
+							{ to: '/signup', className: 'nav-link pull-right' },
 							'Sign up'
 						)
 					)];
@@ -41132,19 +41163,38 @@
 			value: function render() {
 				return _react2.default.createElement(
 					'nav',
-					{ className: 'navbar navbar-light' },
+					{ className: 'navbar navbar-fixed-top navbar-default navbar-static-top' },
 					_react2.default.createElement(
 						'div',
 						{ className: 'container' },
 						_react2.default.createElement(
-							_reactRouterDom.Link,
-							{ to: '/', className: 'navbar-brand' },
-							'Voting App'
+							'div',
+							{ className: 'navbar-header' },
+							_react2.default.createElement(
+								'button',
+								{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '.navbar-collapse', 'aria-expanded': 'false' },
+								_react2.default.createElement(
+									'span',
+									{ className: 'sr-only' },
+									'Toggle navigation'
+								),
+								_react2.default.createElement('span', { className: 'icon-bar' }),
+								_react2.default.createElement('span', { className: 'icon-bar' })
+							),
+							_react2.default.createElement(
+								_reactRouterDom.Link,
+								{ to: '/', className: 'navbar-brand navbartitle' },
+								'Votie'
+							)
 						),
 						_react2.default.createElement(
-							'ul',
-							{ className: 'nav navbar-nav pull-right' },
-							this.renderList()
+							'div',
+							{ className: 'navbar-collapse collapse' },
+							_react2.default.createElement(
+								'ul',
+								{ className: 'nav navbar-nav pull-right' },
+								this.renderList()
+							)
 						)
 					)
 				);
@@ -41206,15 +41256,24 @@
 	    _createClass(Signout, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
+	            var _this2 = this;
+
 	            this.props.signoutUser();
+	            setTimeout(function () {
+	                _this2.props.history.push('/');
+	            }, 2000);
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                null,
-	                'Sorry to see you go'
+	                { className: 'container' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Sorry to see you go'
+	                )
 	            );
 	        }
 	    }]);
@@ -41398,6 +41457,10 @@
 
 	var _reactRouterDom = __webpack_require__(161);
 
+	var _CSSTransitionGroup = __webpack_require__(849);
+
+	var _CSSTransitionGroup2 = _interopRequireDefault(_CSSTransitionGroup);
+
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -41427,34 +41490,45 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'container' },
+	                { className: 'container ' },
 	                _react2.default.createElement(
-	                    _reactRouterDom.Link,
-	                    { to: '/createpoll', className: 'btn btn-success' },
-	                    'Create Poll'
+	                    'div',
+	                    { className: 'frontcover' },
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'pollbuttons' },
+	                        _react2.default.createElement(
+	                            _reactRouterDom.Link,
+	                            { to: '/createpoll', className: 'btn btn-success createpoll' },
+	                            'Create Poll'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouterDom.Link,
+	                            { to: '/mypolls', className: 'btn btn-primary mypolls' },
+	                            'My Polls'
+	                        )
+	                    )
 	                ),
+	                _react2.default.createElement('div', { className: 'frontcoverholder' }),
 	                _react2.default.createElement(
-	                    _reactRouterDom.Link,
-	                    { to: '/mypolls', className: 'btn btn-primary' },
-	                    'My Polls'
-	                ),
-	                _react2.default.createElement(
-	                    'button',
-	                    { className: 'btn btn-info' },
-	                    'View Recent polls'
+	                    'h3',
+	                    null,
+	                    'Recent Polls'
 	                ),
 	                _react2.default.createElement(
 	                    'ul',
 	                    { className: 'list-group' },
-	                    this.props.polls.map(function (poll) {
+	                    this.props.polls.map(function (poll, index) {
+
 	                        return _react2.default.createElement(
-	                            'li',
-	                            { className: 'list-group-item' },
-	                            _react2.default.createElement(
-	                                _reactRouterDom.Link,
-	                                { to: '/viewpoll/' + poll._id },
-	                                poll.name
-	                            )
+	                            _CSSTransitionGroup2.default,
+	                            {
+	                                transitionAppear: true,
+	                                transitionAppearTimeout: 600,
+	                                transitionEnterTimeout: 600,
+	                                transitionLeaveTimeout: 600,
+	                                transitionName: 'fade' },
+	                            _react2.default.createElement(ListItem, { poll: poll, wait: 300 + 300 * index * 0.2 })
 	                        );
 	                    })
 	                )
@@ -41463,6 +41537,52 @@
 	    }]);
 
 	    return LandingPage;
+	}(_react.Component);
+
+	var ListItem = function (_Component2) {
+	    _inherits(ListItem, _Component2);
+
+	    function ListItem(props) {
+	        _classCallCheck(this, ListItem);
+
+	        var _this2 = _possibleConstructorReturn(this, (ListItem.__proto__ || Object.getPrototypeOf(ListItem)).call(this, props));
+
+	        _this2.state = {
+	            hidden: "hidden"
+	        };
+	        return _this2;
+	    }
+
+	    _createClass(ListItem, [{
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            var _this3 = this;
+
+	            setTimeout(function () {
+	                _this3.show();
+	            }, this.props.wait);
+	        }
+	    }, {
+	        key: 'show',
+	        value: function show() {
+	            this.setState({ hidden: "" });
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: this.state.hidden },
+	                _react2.default.createElement(
+	                    _reactRouterDom.Link,
+	                    { className: 'list-group-item', to: '/viewpoll/' + this.props.poll._id },
+	                    this.props.poll.name
+	                )
+	            );
+	        }
+	    }]);
+
+	    return ListItem;
 	}(_react.Component);
 
 	function mapStateToProps(state) {
@@ -53535,7 +53655,7 @@
 /* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
+	var require;var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module) {'use strict';
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 

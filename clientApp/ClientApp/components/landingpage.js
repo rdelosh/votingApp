@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {connect} from'react-redux'
 import * as actions from '../actions'
 import {Link} from 'react-router-dom'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
+
 class LandingPage extends Component{
 
     
@@ -11,20 +13,39 @@ class LandingPage extends Component{
     
     render(){
         return(
-        <div className="container">
-            <Link to="/createpoll" className="btn btn-success">Create Poll</Link>
-            <Link to="/mypolls" className="btn btn-primary">My Polls</Link>
-            <button className="btn btn-info">View Recent polls</button>
+        <div className="container ">
+            
+            <div className="frontcover">
+                <div className="pollbuttons">
+                    <Link to="/createpoll" className="btn btn-success createpoll">Create Poll</Link>
+                    <Link to="/mypolls" className="btn btn-primary mypolls">My Polls</Link>
+                </div>
+            </div>
+            <div className="frontcoverholder">
 
+            </div>
+            
+            
+            <h3>Recent Polls</h3>
             <ul className="list-group">
                 {
-                    this.props.polls.map((poll)=>{
+                    this.props.polls.map((poll,index)=>{
+                        
                         return (
-                            <li className="list-group-item">
                             
-                                <Link to={`/viewpoll/${poll._id}`}>{poll.name}</Link>
-                            </li>
+                            <CSSTransitionGroup 
+                                transitionAppear={true}
+                                transitionAppearTimeout={600}
+                                transitionEnterTimeout={600}
+                                transitionLeaveTimeout={600}
+                                transitionName="fade">
+                                    
+                                        <ListItem poll={poll} wait={300+300*index*0.2}/>
+
+                                    
+                            </CSSTransitionGroup>
                             )
+                        
                     }) 
                 }
                 
@@ -34,6 +55,34 @@ class LandingPage extends Component{
         )
     }
 }
+class ListItem extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            hidden:"hidden"
+        }
+    }
+    
+    componentWillMount(){
+        
+        setTimeout(()=> {
+            this.show();
+        }, this.props.wait);
+    }
+    show() {
+        this.setState({hidden : ""});
+    }
+    render() {
+        return (
+            <div className={this.state.hidden}>
+                
+                    <Link className="list-group-item" to={`/viewpoll/${this.props.poll._id}`}>{this.props.poll.name}</Link>
+                
+            </div>
+        )
+    }
+}
+
 function mapStateToProps(state){
     return {
         polls:state.polls

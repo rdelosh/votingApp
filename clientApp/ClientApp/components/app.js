@@ -12,12 +12,23 @@ import MyPolls from './mypolls'
 import EditPoll from './editpoll'
 import PageWrapper from './pagewrapper'
 
-const Hello = () =>{
-		{return <div>hello</div>}
-	}
 
+class Hello extends React.Component{
+	componentDidMount(){
+		setTimeout(() => {
+			this.props.history.push('/')
+		}, 2000);
+	}
+	render(){return (
+				<div className="container">
+				<h1>Hello!</h1>
+				<h1>Welcome Back!</h1>
+				
+				</div>
+			)}
+}
 class Goodbye extends React.Component{
-		render(){return <div>Goodbye</div>}
+		render(){return <h1>Goodbye</h1>}
 	}
 
 class VotingApp extends React.Component{

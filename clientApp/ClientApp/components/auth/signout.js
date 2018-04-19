@@ -5,9 +5,13 @@ import * as actions from '../../actions'
 class Signout extends Component{
     componentWillMount(){
         this.props.signoutUser()
+        setTimeout(() => {
+            this.props.history.push('/')
+        }, 2000);
     }
     render(){
-        return <div>Sorry to see you go</div>
+        return <div className="container">
+        <h1>Sorry to see you go</h1></div>
     }
 }
 
