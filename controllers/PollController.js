@@ -75,6 +75,8 @@ exports.Vote = function(req,res,next){
         
     }else{
         var ip = req.headers["x-forwarded-for"]
+        console.log(req.headers["x-forwarded-for"])
+        console.log(req.headers)
         // IF IP ALREADY EXISTS IN POLL.IPS, THEN RES.SEND("IP ALREADY VOTED")
         performVoting(optionid,pollid,res,{type:"ip",ip:ip})
     }
