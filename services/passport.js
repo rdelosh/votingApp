@@ -1,6 +1,9 @@
 const passport = require('passport')
 const User = require('../models/user')
-const config = require('../config')
+var fs = require('fs');
+if (fs.existsSync('../config')) {
+    var config = require('../config')
+}
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 

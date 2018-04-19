@@ -1,6 +1,9 @@
 const User = require('../models/user');
 const jwt = require('jwt-simple')
-const config = require('../config')
+var fs = require('fs');
+if (fs.existsSync('../config')) {
+    var config = require('../config')
+}
 
 function tokenForUser(user){
 	const timestamp = new Date().getTime();
